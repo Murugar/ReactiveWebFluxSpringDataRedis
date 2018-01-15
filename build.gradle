@@ -1,0 +1,55 @@
+plugins {
+    id "java"
+    id "eclipse"
+    id "org.springframework.boot" version "1.5.3.RELEASE"
+    id "io.spring.dependency-management" version "1.0.2.RELEASE"
+}
+
+ext {
+    springBootVersion = "2.0.0.M1"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+    }
+}
+
+springBoot {
+    executable = true
+}
+
+version = "0.0.1"
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+// without thia configurations block it will fail on linux system:
+configurations {
+    providedRuntime
+    all*.exclude group: 'io.netty', module: 'netty-transport-native-epoll'
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-data-redis-reactive",
+            "org.springframework.boot:spring-boot-starter-webflux",
+            "io.vavr:vavr:0.9.0"
+    runtime "org.springframework.boot:spring-boot-devtools"
+    compileOnly "org.projectlombok:lombok"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+}
+
+
+springBoot {
+    executable = true
+}
+
+
+task wrapper(type: Wrapper) {
+    distributionType = "ALL"
+    gradleVersion = "4.2.1"
+}
