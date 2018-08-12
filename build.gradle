@@ -6,7 +6,7 @@ plugins {
 }
 
 ext {
-    springBootVersion = "2.0.0.M1"
+    springBootVersion = "2.0.3.RELEASE"
 }
 
 dependencyManagement {
